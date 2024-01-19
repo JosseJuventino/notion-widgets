@@ -1,25 +1,24 @@
 import React, { useState, useEffect } from 'react';
 
-const CuadroEmbebible = ({ color, mensaje }) => (
-  <div style={{ backgroundColor: color, padding: '20px', textAlign: 'center' }}>
-    <h2>{mensaje}</h2>
-  </div>
-);
+const CuadroEmbebible = ({ color, mensaje }) => {
+  return (
+    <div style={{ backgroundColor: color, padding: '20px', textAlign: 'center' }}>
+      <h2>{mensaje}</h2>
+    </div>
+  );
+};
 
-const App = () => {
-  const [cuadroColor, setCuadroColor] = useState('#3498db');
-  const [cuadroMensaje, setCuadroMensaje] = useState('Buenas noches');
+const App = ({ color, mensaje }) => {
+  const [cuadroColor, setCuadroColor] = useState(color || '#3498db');
+  const [cuadroMensaje, setCuadroMensaje] = useState(mensaje || 'Buenas noches');
 
   useEffect(() => {
-    // Obtener parámetros de la URL
-    const params = new URLSearchParams(window.location.search);
-    const colorParam = params.get('color');
-    const mensajeParam = params.get('mensaje');
-
-    // Actualizar el estado con los parámetros de la URL si están presentes
-    if (colorParam) setCuadroColor(colorParam);
-    if (mensajeParam) setCuadroMensaje(decodeURIComponent(mensajeParam));
-  }, []);
+    // Si hay parámetros en la URL, actualiza el color y el mensaje del cuadro
+    if (color && mensaje) {
+      setCuadroColor(color);
+      setCuadroMensaje(mensaje);
+    }
+  }, [color, mensaje]);
 
   // Función para generar el enlace dinámico
   const generarEnlace = () => {
@@ -29,13 +28,10 @@ const App = () => {
       </div>
     `);
 
-    // Generar la URL con los parámetros
-    const urlConParametros = `${window.location.origin}?color=${encodeURIComponent(
-      cuadroColor
-    )}&mensaje=${encodeURIComponent(cuadroMensaje)}`;
+    const enlaceEmbebido = `<iframe src="https://notion-widgets-omega.vercel.app/?color=${cuadroColor}&mensaje=${cuadroMensaje}" width="300" height="150" frameborder="0"></iframe>`;
 
     // Puedes imprimir el enlace en la consola o utilizarlo según tus necesidades
-    console.log('Enlace Embebido:', urlConParametros);
+    console.log('Enlace Embebido:', enlaceEmbebido);
   };
 
   return (
