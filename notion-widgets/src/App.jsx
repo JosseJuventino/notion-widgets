@@ -31,7 +31,7 @@ const App = () => {
 
             {/* Controles para personalizar el cuadro */}
             <label>
-              Color del cuadro:
+              Color del cuadroooo:
               <input type="color" value={cuadroColor} onChange={(e) => setCuadroColor(e.target.value)} />
             </label>
 
